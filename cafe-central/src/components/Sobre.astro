@@ -1,0 +1,12 @@
+---
+import { site } from "../config";
+---
+
+<section id="sobre" class="contentor pt-20 md:pt-28">
+  <div class="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12">
+    <h2 class="titulo-seccao">{site.sobre.titulo}</h2>
+    <div class="space-y-5 text-lg max-w-[38rem]">
+      {site.sobre.paragrafos.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>

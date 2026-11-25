@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+---
+
+<Base titulo={`Página não encontrada — ${site.nome}`} semIndexar>
+  <section class="contentor py-24 max-w-2xl">
+    <h1 class="titulo-seccao">Esta página não existe</h1>
+    <p class="mt-5 text-lg">O endereço pode ter mudado ou ter sido escrito com um erro.</p>
+    <a href="/" class="botao botao-principal mt-8">Ir para a página inicial</a>
+  </section>
+</Base>

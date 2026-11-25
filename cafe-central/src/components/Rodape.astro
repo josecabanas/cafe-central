@@ -1,0 +1,48 @@
+---
+import { site, contactos, redes, legal } from "../config";
+import FaixaAzulejo from "./FaixaAzulejo.astro";
+const ano = new Date().getFullYear();
+---
+
+<footer class="mt-24">
+  <FaixaAzulejo />
+  <div class="bg-primaria text-white/90">
+    <div class="contentor py-12 grid gap-10 md:grid-cols-3">
+      <div>
+        <p class="font-titulo font-bold text-2xl text-white [font-stretch:80%]">{site.nome}</p>
+        <address class="not-italic mt-3 leading-relaxed">
+          {contactos.morada.rua}<br />
+          {contactos.morada.codigoPostal} {contactos.morada.localidade}
+        </address>
+      </div>
+
+      <div>
+        <p class="font-titulo font-semibold text-white">Contactos</p>
+        <ul class="mt-3 space-y-1">
+          <li><a class="hover:underline" href={`tel:${contactos.telefone.replace(/\s/g, "")}`}>{contactos.telefoneVisivel}</a></li>
+          <li><a class="hover:underline" href={`mailto:${contactos.email}`}>{contactos.email}</a></li>
+          {redes.instagram && <li><a class="hover:underline" href={redes.instagram} rel="noopener">Instagram</a></li>}
+          {redes.facebook && <li><a class="hover:underline" href={redes.facebook} rel="noopener">Facebook</a></li>}
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-titulo font-semibold text-white">Informação legal</p>
+        <ul class="mt-3 space-y-1">
+          <li><a class="hover:underline" href="/privacidade">Política de privacidade</a></li>
+          <li>
+            <a class="hover:underline" href={legal.livroReclamacoes} rel="noopener" target="_blank">
+              Livro de Reclamações Eletrónico
+            </a>
+          </li>
+        </ul>
+        <p class="mt-4 text-sm text-white/70">
+          {legal.nomeLegal}, NIF {legal.nif}
+        </p>
+      </div>
+    </div>
+    <div class="border-t border-white/15">
+      <p class="contentor py-5 text-sm text-white/60">© {ano} {site.nome}</p>
+    </div>
+  </div>
+</footer>

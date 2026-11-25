@@ -1,0 +1,34 @@
+---
+// Faixa decorativa inspirada em azulejo. É o elemento de identidade do site.
+// Para outro cliente: muda o desenho dentro do <pattern> ou remove o componente.
+interface Props {
+  altura?: number;
+}
+const { altura = 56 } = Astro.props;
+const id = "azulejo-" + Math.random().toString(36).slice(2, 8);
+---
+
+<div aria-hidden="true" class="w-full text-primaria" style={`height:${altura}px`}>
+  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id={id} width={altura} height={altura} patternUnits="userSpaceOnUse">
+        <g transform={`scale(${altura / 56})`}>
+          <rect width="56" height="56" fill="#fff" />
+          <rect x="0.5" y="0.5" width="55" height="55" fill="none" stroke="currentColor" stroke-opacity="0.25" />
+          <!-- quartos de círculo nos cantos: ao repetir formam círculos completos -->
+          <path d="M0 14 A14 14 0 0 0 14 0 L0 0Z" fill="currentColor" />
+          <path d="M42 0 A14 14 0 0 0 56 14 L56 0Z" fill="currentColor" />
+          <path d="M0 42 A14 14 0 0 1 14 56 L0 56Z" fill="currentColor" />
+          <path d="M42 56 A14 14 0 0 1 56 42 L56 56Z" fill="currentColor" />
+          <!-- flor central -->
+          <path d="M28 12 Q34 22 28 28 Q22 22 28 12Z" fill="currentColor" />
+          <path d="M28 44 Q22 34 28 28 Q34 34 28 44Z" fill="currentColor" />
+          <path d="M12 28 Q22 22 28 28 Q22 34 12 28Z" fill="currentColor" />
+          <path d="M44 28 Q34 34 28 28 Q34 22 44 28Z" fill="currentColor" />
+          <circle cx="28" cy="28" r="3" fill="var(--color-destaque)" />
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill={`url(#${id})`} />
+  </svg>
+</div>

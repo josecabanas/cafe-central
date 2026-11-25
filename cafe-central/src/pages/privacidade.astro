@@ -1,0 +1,51 @@
+---
+// ATENÇÃO: isto é um modelo de base. Confirma com o cliente que descreve
+// o que o site realmente faz (formulário, mapa, analytics...).
+import Base from "../layouts/Base.astro";
+import { site, contactos, legal } from "../config";
+---
+
+<Base titulo={`Política de privacidade — ${site.nome}`} descricao={`Como o ${site.nome} trata os dados pessoais recolhidos no site.`}>
+  <article class="contentor py-16 md:py-24">
+    <div class="max-w-[40rem] space-y-5 [&_h2]:font-titulo [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-primaria [&_h2]:pt-6">
+      <h1 class="titulo-seccao">Política de privacidade</h1>
+      <p class="text-texto-suave">Última atualização: {legal.dataPolitica}</p>
+
+      <h2>Quem é responsável pelos dados</h2>
+      <p>
+        {legal.nomeLegal}, NIF {legal.nif}, com sede em {contactos.morada.rua}, {contactos.morada.codigoPostal}
+        {contactos.morada.localidade}. Para qualquer questão sobre os seus dados, escreva para
+        <a class="underline" href={`mailto:${contactos.email}`}>{contactos.email}</a>.
+      </p>
+
+      <h2>Que dados recolhemos</h2>
+      <p>
+        Só recolhemos os dados que nos envia pelo formulário de contacto: nome, email, telefone (se o indicar) e a
+        mensagem. Usamo-los apenas para responder ao seu pedido.
+      </p>
+      <p>
+        O formulário é processado pelo serviço Web3Forms, que nos encaminha a mensagem por email. Guardamos as
+        mensagens durante o tempo necessário para tratar o pedido, e no máximo 12 meses.
+      </p>
+
+      <h2>Estatísticas de visitas</h2>
+      <p>
+        Usamos o Cloudflare Web Analytics para saber quantas pessoas visitam o site. Este serviço não usa cookies e não
+        identifica os visitantes.
+      </p>
+
+      <h2>Mapa</h2>
+      <p>
+        O mapa da secção de contactos é fornecido pelo Google Maps e só é carregado se clicar em “Mostrar mapa”. A partir
+        desse momento, o Google pode guardar cookies no seu dispositivo, de acordo com a
+        <a class="underline" href="https://policies.google.com/privacy?hl=pt-PT" rel="noopener">política de privacidade da Google</a>.
+      </p>
+
+      <h2>Os seus direitos</h2>
+      <p>
+        Pode pedir a qualquer momento para consultar, corrigir ou apagar os seus dados, escrevendo para o email acima.
+        Tem também o direito de apresentar reclamação à Comissão Nacional de Proteção de Dados (www.cnpd.pt).
+      </p>
+    </div>
+  </article>
+</Base>

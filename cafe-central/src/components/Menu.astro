@@ -1,0 +1,37 @@
+---
+// Tabela de preços / serviços. Os dados vêm de `menu` em src/config.ts
+import { menu } from "../config";
+---
+
+<section id="menu" class="contentor pt-20 md:pt-28">
+  <div class="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12">
+    <div>
+      <h2 class="titulo-seccao">{menu.titulo}</h2>
+      <p class="mt-4 text-texto-suave max-w-xs">{menu.intro}</p>
+    </div>
+
+    <div class="grid gap-12 sm:grid-cols-2">
+      {
+        menu.categorias.map((cat) => (
+          <div>
+            <h3 class="font-titulo text-xl font-bold pb-2 border-b-2 border-primaria">{cat.nome}</h3>
+            <ul class="mt-2">
+              {cat.itens.map((item) => (
+                <li class="py-3 border-b border-linha">
+                  <div class="flex items-baseline gap-3">
+                    <span class="font-medium">{item.nome}</span>
+                    <span class="flex-1 border-b border-dotted border-texto-suave/50 translate-y-[-0.3em]" aria-hidden="true" />
+                    <span class="font-titulo font-semibold tabular-nums text-primaria">{item.preco}</span>
+                  </div>
+                  {"descricao" in item && item.descricao && (
+                    <p class="text-sm text-texto-suave mt-0.5">{item.descricao}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

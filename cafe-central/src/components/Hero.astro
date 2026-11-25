@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import { site, contactos } from "../config";
+import imagemHero from "../assets/hero.jpg";
+import EstadoAberto from "./EstadoAberto.astro";
+import FaixaAzulejo from "./FaixaAzulejo.astro";
+---
+
+<section class="relative">
+  <div class="contentor grid gap-10 lg:grid-cols-[1.1fr_1fr] items-center pt-10 pb-14 md:pt-16 md:pb-20">
+    <div>
+      <EstadoAberto />
+      <h1
+        class="mt-6 text-[clamp(2.75rem,7.5vw,5.75rem)] font-extrabold text-primaria [font-stretch:78%] leading-[0.95]"
+      >
+        {site.hero.titulo}
+      </h1>
+      <p class="mt-6 max-w-[34rem] text-lg text-texto-suave">{site.hero.texto}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={site.hero.botaoPrincipal.link} class="botao botao-principal">{site.hero.botaoPrincipal.texto}</a>
+        <a href={site.hero.botaoSecundario.link} class="botao botao-secundario">{site.hero.botaoSecundario.texto}</a>
+      </div>
+      <p class="mt-6 text-sm text-texto-suave">
+        {contactos.morada.rua}, {contactos.morada.localidade}
+      </p>
+    </div>
+
+    <div class="relative">
+      <Image
+        src={imagemHero}
+        alt="Interior do Café Central com a montra da pastelaria"
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="w-full aspect-[4/3] object-cover rounded-[2rem_2rem_2rem_0.25rem]"
+      />
+    </div>
+  </div>
+  <FaixaAzulejo altura={44} />
+</section>

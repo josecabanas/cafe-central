@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+---
+
+<Base titulo={`Mensagem enviada — ${site.nome}`} semIndexar>
+  <section class="contentor py-24 max-w-2xl">
+    <h1 class="titulo-seccao">Mensagem enviada</h1>
+    <p class="mt-5 text-lg">Obrigado pelo contacto. Respondemos assim que possível, normalmente no próprio dia.</p>
+    <a href="/" class="botao botao-principal mt-8">Voltar à página inicial</a>
+  </section>
+</Base>

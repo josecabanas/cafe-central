@@ -1,0 +1,71 @@
+---
+import { site, navegacao, contactos } from "../config";
+---
+
+<header class="sticky top-0 z-40 bg-fundo/90 backdrop-blur border-b border-linha">
+  <div class="contentor flex items-center justify-between h-16">
+    <a href="/" class="font-titulo font-bold text-xl text-primaria [font-stretch:80%]">
+      {site.nome}
+    </a>
+
+    <nav aria-label="Principal" class="hidden md:block">
+      <ul class="flex items-center gap-7 font-titulo font-medium">
+        {
+          navegacao.map((item) => (
+            <li>
+              <a href={item.link} class="hover:text-primaria underline-offset-4 hover:underline">
+                {item.texto}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={`tel:${contactos.telefone.replace(/\s/g, "")}`} class="botao botao-principal !py-2 !px-4 text-sm">
+            Ligar {contactos.telefoneVisivel}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <details class="md:hidden relative" id="menu-movel">
+      <summary
+        class="list-none cursor-pointer flex items-center justify-center size-11 rounded-full ring-2 ring-primaria text-primaria"
+        aria-label="Abrir navegação"
+      >
+        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </summary>
+      <nav
+        aria-label="Principal (telemóvel)"
+        class="absolute right-0 mt-3 w-56 bg-superficie rounded-xl shadow-lg ring-1 ring-linha p-2"
+      >
+        <ul class="font-titulo font-medium">
+          {
+            navegacao.map((item) => (
+              <li>
+                <a href={item.link} class="block px-4 py-3 rounded-lg hover:bg-fundo">
+                  {item.texto}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href={`tel:${contactos.telefone.replace(/\s/g, "")}`}
+              class="block px-4 py-3 rounded-lg bg-primaria text-white mt-1"
+            >
+              Ligar {contactos.telefoneVisivel}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Fecha o menu do telemóvel quando se escolhe uma opção
+  const menu = document.getElementById("menu-movel") as HTMLDetailsElement | null;
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => (menu.open = false)));
+</script>

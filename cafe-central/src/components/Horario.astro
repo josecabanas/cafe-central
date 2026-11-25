@@ -1,0 +1,49 @@
+---
+import { horario, notaHorario } from "../config";
+import EstadoAberto from "./EstadoAberto.astro";
+---
+
+<section id="horario" class="contentor pt-20 md:pt-28">
+  <div class="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12">
+    <div>
+      <h2 class="titulo-seccao">Horário</h2>
+      <div class="mt-5"><EstadoAberto /></div>
+    </div>
+
+    <div>
+      <table class="w-full max-w-xl font-titulo text-lg">
+        <caption class="sr-only">Horário de funcionamento</caption>
+        <tbody>
+          {
+            horario.map((d) => (
+              <tr class="linha-dia border-b border-linha" data-dia={d.dia}>
+                <th scope="row" class="text-left font-medium py-3 pl-3">{d.nome}</th>
+                <td class="text-right py-3 pr-3 tabular-nums">
+                  {d.periodos.length
+                    ? d.periodos.map(([a, f]) => `${a} – ${f}`).join(", ")
+                    : <span class="text-texto-suave">Fechado</span>}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      {notaHorario && <p class="mt-4 text-texto-suave text-base">{notaHorario}</p>}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { agoraNoFuso } from "../lib/horario";
+  import { fusoHorario } from "../config";
+  // Destaca o dia de hoje
+  const { dia } = agoraNoFuso(fusoHorario);
+  const linha = document.querySelector<HTMLElement>(`.linha-dia[data-dia="${dia}"]`);
+  if (linha) {
+    linha.classList.add("bg-superficie", "font-semibold");
+    linha.querySelector("th")!.insertAdjacentHTML(
+      "beforeend",
+      ' <span class="ml-2 text-sm font-medium text-primaria">hoje</span>',
+    );
+  }
+</script>

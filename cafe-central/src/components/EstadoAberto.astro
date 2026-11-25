@@ -1,0 +1,29 @@
+---
+// Mostra "Aberto agora, fecha às 19:30" calculado no browser do visitante.
+import { horario, fusoHorario } from "../config";
+---
+
+<p
+  class="estado-aberto inline-flex items-center gap-2.5 font-titulo font-semibold text-base bg-superficie ring-1 ring-linha rounded-full pl-3 pr-4 py-1.5"
+  data-horario={JSON.stringify(horario)}
+  data-fuso={fusoHorario}
+  aria-live="polite"
+>
+  <span class="ponto size-2.5 rounded-full bg-texto-suave" aria-hidden="true"></span>
+  <span class="texto">Ver horário</span>
+</p>
+
+<script>
+  import { estadoAtual } from "../lib/horario";
+
+  function atualizar() {
+    document.querySelectorAll<HTMLElement>(".estado-aberto").forEach((el) => {
+      const estado = estadoAtual(JSON.parse(el.dataset.horario!), el.dataset.fuso!);
+      el.querySelector(".texto")!.textContent = estado.texto;
+      const ponto = el.querySelector<HTMLElement>(".ponto")!;
+      ponto.style.background = estado.aberto ? "var(--color-aberto)" : "var(--color-fechado)";
+    });
+  }
+  atualizar();
+  setInterval(atualizar, 60_000);
+</script>

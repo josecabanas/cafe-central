@@ -1,0 +1,95 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque/wdth.css";
+@import "@fontsource-variable/literata";
+
+/* =============================================================
+   TEMA DO CLIENTE
+   Para adaptar a outro negócio, muda sobretudo estas variáveis.
+   ============================================================= */
+@theme static {
+  /* Cores */
+  --color-primaria: #1d3e8f;      /* azul azulejo — botões, títulos, faixa */
+  --color-primaria-escura: #142c66;
+  --color-destaque: #f0b429;      /* amarelo nata — usar com moderação */
+  --color-fundo: #f4f6f8;         /* branco cal */
+  --color-superficie: #ffffff;
+  --color-texto: #15192a;         /* tinta */
+  --color-texto-suave: #4b5268;
+  --color-linha: #d6dbe4;
+  --color-aberto: #1f7a4d;
+  --color-fechado: #a23b2c;
+
+  /* Fontes */
+  --font-titulo: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-texto: "Literata Variable", Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-fundo);
+    color: var(--color-texto);
+    font-family: var(--font-texto);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-titulo);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-destaque);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+}
+
+@layer components {
+  .contentor {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .contentor { padding-inline: 2rem; }
+  }
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .botao-principal {
+    background: var(--color-primaria);
+    color: #fff;
+  }
+  .botao-principal:hover { background: var(--color-primaria-escura); }
+  .botao-secundario {
+    color: var(--color-primaria);
+    box-shadow: inset 0 0 0 2px var(--color-primaria);
+  }
+  .botao-secundario:hover { background: var(--color-primaria); color: #fff; }
+  .titulo-seccao {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    font-stretch: 85%;
+    color: var(--color-primaria);
+  }
+}

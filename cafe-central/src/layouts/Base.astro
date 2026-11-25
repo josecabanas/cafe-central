@@ -1,0 +1,89 @@
+---
+import "../styles/global.css";
+import Cabecalho from "../components/Cabecalho.astro";
+import Rodape from "../components/Rodape.astro";
+import BotaoWhatsapp from "../components/BotaoWhatsapp.astro";
+import { site, contactos, redes, horario } from "../config";
+import imagemHero from "../assets/hero.jpg";
+import { getImage } from "astro:assets";
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  semIndexar?: boolean;
+}
+
+const { titulo = site.titulo, descricao = site.descricao, semIndexar = false } = Astro.props;
+const urlCanonico = new URL(Astro.url.pathname, site.url).href;
+const og = await getImage({ src: imagemHero, width: 1200, height: 630, format: "jpg", fit: "cover" });
+const urlOg = new URL(og.src, site.url).href;
+
+// Dados estruturados para o Google (aparece no Maps / pesquisa local)
+const nomesDias = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const dadosEstruturados = {
+  "@context": "https://schema.org",
+  "@type": site.tipoSchema,
+  name: site.nome,
+  description: site.descricao,
+  url: site.url,
+  image: urlOg,
+  telephone: contactos.telefone,
+  email: contactos.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: contactos.morada.rua,
+    postalCode: contactos.morada.codigoPostal,
+    addressLocality: contactos.morada.localidade,
+    addressCountry: contactos.morada.pais,
+  },
+  geo: { "@type": "GeoCoordinates", latitude: contactos.geo.lat, longitude: contactos.geo.lng },
+  openingHoursSpecification: horario.flatMap((d) =>
+    d.periodos.map(([abre, fecha]) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: nomesDias[d.dia],
+      opens: abre,
+      closes: fecha,
+    })),
+  ),
+  sameAs: Object.values(redes).filter(Boolean),
+};
+---
+
+<!doctype html>
+<html lang={site.idioma}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={urlCanonico} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#1d3e8f" />
+    {semIndexar && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={urlCanonico} />
+    <meta property="og:image" content={urlOg} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a
+      href="#conteudo"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 bg-white px-4 py-2 rounded"
+      >Saltar para o conteúdo</a
+    >
+    <Cabecalho />
+    <main id="conteudo" class="flex-1">
+      <slot />
+    </main>
+    <Rodape />
+    <BotaoWhatsapp />
+  </body>
+</html>
